@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 100,
+  "sortImports": {
+    "internalPattern": ["~/", "@database/"]
+  },
+  "sortTailwindcss": {
+    "stylesheet": "./app/app.css",
+    "functions": ["cn", "cva"]
+  },
+  "ignorePatterns": [
+    "build/**",
+    ".react-router/**",
+    ".wrangler/**",
+    "worker-configuration.d.ts",
+    "database/migrations/**",
+    "package-lock.json",
+    "playwright-report/**",
+    "test-results/**",
+    ".agents/**"
+  ]
+}

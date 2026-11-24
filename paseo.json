@@ -1,0 +1,17 @@
+{
+  "worktree": {
+    "setup": ["bash scripts/bootstrap-worktree.sh"]
+  },
+  "scripts": {
+    "dev": {
+      "type": "service",
+      "command": "npm run dev -- --host \"${HOST:-localhost}\" --port \"${PASEO_PORT:-5173}\" --strictPort"
+    },
+    "check": {
+      "command": "npm run check"
+    },
+    "e2e": {
+      "command": "npm run test:e2e"
+    }
+  }
+}

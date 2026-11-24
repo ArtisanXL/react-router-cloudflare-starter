@@ -1,0 +1,37 @@
+/**
+ * For more details on how to configure Wrangler, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "react-router-cloudflare-starter",
+  "compatibility_date": "2026-11-23",
+  // better-auth relies on AsyncLocalStorage (node:async_hooks).
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "./workers/app.ts",
+  "observability": {
+    "enabled": true,
+  },
+  "upload_source_maps": true,
+  /**
+   * D1 database.
+   * `database_id` is a placeholder that works for local dev (`--local`).
+   * Before deploying run `npx wrangler d1 create app-db` and paste the real id here.
+   */
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "app-db",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "database/migrations",
+    },
+  ],
+  /**
+   * Secrets live in .dev.vars locally (see .dev.vars.example) and are set with
+   * `wrangler secret put <NAME>` in production. Declaring them here makes
+   * `wrangler types` generate them even when .dev.vars is absent (CI).
+   */
+  "secrets": {
+    "required": ["BETTER_AUTH_SECRET", "BETTER_AUTH_URL"],
+  },
+}

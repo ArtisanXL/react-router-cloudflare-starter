@@ -1,0 +1,12 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": ["scripts/*.mjs"],
+  "project": [
+    "app/**/*.{ts,tsx,css}",
+    "database/**/*.ts",
+    "workers/**/*.ts",
+    "tests/**/*.ts",
+    "scripts/**/*.mjs"
+  ],
+  "ignoreDependencies": ["@react-router/node"]
+}

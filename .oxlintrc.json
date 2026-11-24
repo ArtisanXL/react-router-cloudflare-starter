@@ -1,0 +1,104 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["eslint", "typescript", "react", "jsx-a11y", "import", "unicorn", "oxc", "vitest"],
+  "env": { "browser": true, "es2024": true },
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "perf": "warn"
+  },
+  "options": {
+    "typeAware": true,
+    "denyWarnings": true,
+    "reportUnusedDisableDirectives": "warn"
+  },
+  "settings": {
+    "react": { "version": "19.2" }
+  },
+  "ignorePatterns": [
+    "build/**",
+    ".react-router/**",
+    ".wrangler/**",
+    "worker-configuration.d.ts",
+    "database/migrations/**",
+    "playwright-report/**",
+    "test-results/**"
+  ],
+  "rules": {
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "warn",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-key": "error",
+    "react/self-closing-comp": "warn",
+
+    "import/no-cycle": "error",
+    "import/no-duplicates": "error",
+    "import/no-self-import": "error",
+    "import/first": "warn",
+    "import/no-unassigned-import": ["warn", { "allow": ["**/*.css"] }],
+
+    "typescript/consistent-type-imports": ["warn", { "fixStyle": "inline-type-imports" }],
+    "typescript/no-explicit-any": "warn",
+    "typescript/no-floating-promises": "error",
+    "typescript/no-misused-promises": ["error", { "checksVoidReturn": { "attributes": false } }],
+    "typescript/await-thenable": "error",
+
+    "no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "destructuredArrayIgnorePattern": "^_"
+      }
+    ],
+
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          {
+            "group": [
+              "~/features/*/components/*",
+              "~/features/*/routes/*",
+              "~/features/*/*.schema",
+              "~/features/*/password.server"
+            ],
+            "message": "Features talk to each other only through exported *.server.ts modules (e.g. ~/features/auth/auth.server)."
+          },
+          {
+            "group": ["react-router-dom"],
+            "message": "react-router-dom was removed in React Router v8. Import from \"react-router\" (or \"react-router/dom\")."
+          }
+        ]
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["app/shared/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["~/features/*", "~/features/**", "../../features/**"],
+                "message": "shared/ must never import from features/."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["**/*.test.ts", "tests/**"],
+      "rules": {
+        "typescript/no-non-null-assertion": "off"
+      }
+    },
+    {
+      "files": ["*.config.ts", "tests/e2e/**"],
+      "env": { "node": true }
+    }
+  ]
+}

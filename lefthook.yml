@@ -1,0 +1,25 @@
+# Git hooks (installed by `npm install` via the "prepare" script).
+pre-commit:
+  parallel: true
+  jobs:
+    - name: oxlint
+      glob: "*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}"
+      run: npx oxlint --no-error-on-unmatched-pattern {staged_files}
+    - name: oxfmt
+      glob: "*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,json,jsonc,md,css,yml,yaml}"
+      run: npx oxfmt --no-error-on-unmatched-pattern {staged_files}
+      stage_fixed: true
+
+pre-push:
+  piped: true
+  jobs:
+    - name: typecheck
+      run: npm run typecheck
+    - name: test
+      run: npm run test
+
+# A merge may change package-lock.json or add a migration: refresh this checkout (best effort).
+post-merge:
+  jobs:
+    - name: bootstrap
+      run: bash scripts/bootstrap-worktree.sh </dev/null || true
