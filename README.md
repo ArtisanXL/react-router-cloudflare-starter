@@ -4,7 +4,7 @@ A full-stack starter kit for **Cloudflare Workers**. It uses React Router v8 in 
 
 ## Quick start
 
-Requires Node **22.22+** (see `.nvmrc`).
+Requires Node **26.13.1** (pinned in `.nvmrc`; CI uses the same file) (see `.nvmrc`).
 
 ```sh
 npm run setup
